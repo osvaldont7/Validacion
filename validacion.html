@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Módulo de Consulta Documental | Acuerdo 445</title>
+    <meta name="description" content="Módulo institucional de referencia documental por folio para documentos emitidos en el marco aplicable al Acuerdo 445.">
+
+    <link href="/favicon.ico" rel="shortcut icon">
+    <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
+
+    <style>
+      :root {
+        --gob-wine: #611232;
+        --gob-wine-light: #7b1e3e;
+        --gob-gold: #b38e5d;
+        --gob-dark: #13322B;
+        --bg-color: #f8f9fa;
+        --text-color: #333333;
+      }
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Hero Interior */
+      .hero-interior {
+        background: linear-gradient(135deg, #4d0a27 0%, #611232 40%, #7b1e3e 100%);
+        color: #ffffff;
+        padding: 50px 0 40px 0;
+        margin-bottom: 30px;
+        position: relative;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+
+      .hero-interior::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--gob-gold) 0%, #d8be9d 100%);
+      }
+
+      .hero-interior h1 {
+        font-size: 38px;
+        font-weight: 700;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        letter-spacing: -1px;
+      }
+
+      .hero-interior .lead {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 18px;
+        font-weight: 300;
+      }
+
+      .eyebrow-light {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 13px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      /* Componentes base */
+      .breadcrumb {
+        background: transparent;
+        padding-left: 0;
+        margin-bottom: 25px;
+        font-size: 15px;
+      }
+
+      /* Tarjeta de Búsqueda */
+      .search-card {
+        background: #ffffff;
+        border: 1px solid #eaeaea;
+        border-radius: 12px;
+        padding: 40px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+      }
+
+      .border-right-modern {
+        border-right: 1px solid #eaeaea;
+        padding-right: 40px;
+      }
+
+      .form-control-modern {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: none;
+        transition: all 0.3s ease;
+        height: 54px;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--gob-wine);
+        text-transform: uppercase;
+      }
+
+      .form-control-modern:focus {
+        border-color: var(--gob-wine-light);
+        box-shadow: 0 0 0 4px rgba(123, 30, 62, 0.1);
+      }
+
+      .btn-ultra-modern {
+        background-color: var(--gob-wine);
+        border-color: var(--gob-wine);
+        color: #ffffff;
+        padding: 12px 35px;
+        font-weight: 600;
+        font-size: 16px;
+        border-radius: 6px;
+        box-shadow: 0 4px 10px rgba(97, 18, 50, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .btn-ultra-modern:hover {
+        background-color: var(--gob-wine-light);
+        border-color: var(--gob-wine-light);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(97, 18, 50, 0.3);
+      }
+
+      .btn-outline-modern {
+        background-color: transparent;
+        border: 2px solid #ddd;
+        color: #666;
+        padding: 10px 25px;
+        font-weight: 600;
+        font-size: 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        margin-left: 10px;
+      }
+
+      /* Panel y Tabla */
+      .panel-modern {
+        border: 1px solid #eaeaea;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        overflow: hidden;
+      }
+
+      .panel-modern .panel-heading {
+        background-color: #ffffff;
+        border-bottom: 1px solid #eaeaea;
+        padding: 20px 25px;
+      }
+
+      .panel-modern .panel-title {
+        color: var(--text-color);
+        font-weight: 700;
+        font-size: 20px;
+      }
+
+      .table-modern > tbody > tr > th,
+      .table-modern > tbody > tr > td {
+        padding: 18px 25px;
+        border-top: 1px solid #f0f0f0;
+        vertical-align: middle;
+      }
+
+      .table-modern > tbody > tr > th {
+        color: #555;
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .table-modern > tbody > tr > td {
+        font-size: 16px;
+        color: #222;
+      }
+
+      .table-modern > tbody > tr.active > th {
+        background-color: rgba(97, 18, 50, 0.04);
+        color: var(--gob-wine);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 13px;
+        border-top: 2px solid rgba(97, 18, 50, 0.1);
+        border-bottom: 2px solid rgba(97, 18, 50, 0.1);
+        padding: 12px 25px;
+      }
+
+      /* Píldora VÁLIDO personalizada */
+      .badge-valido {
+        display: inline-flex;
+        align-items: center;
+        background-color: #198754; 
+        color: white;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        box-shadow: 0 3px 8px rgba(25, 135, 84, 0.3);
+      }
+
+      /* Cajas de código y firma super modernas */
+      .code-box {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13px;
+        word-break: break-all;
+        color: #1f2d3d;
+        background: #f4f6f8;
+        padding: 18px;
+        border: 1px solid #dce1e6;
+        border-radius: 8px;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+      }
+
+      .alert-modern {
+        border: none;
+        border-left: 5px solid;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 20px;
+      }
+      .alert-success-modern { background-color: #f4fdf8; border-left-color: #198754; color: #146c43; }
+      .alert-info-modern { background-color: #f4f8fd; border-left-color: #0d6efd; color: #0a58ca; }
+    </style>
+  </head>
+  <body>
+
+    <main class="page">
+      
+      <section class="hero-interior">
+        <div class="container">
+          <span class="eyebrow-light">Acuerdo 445</span>
+          <h1>Módulo de Consulta Documental</h1>
+          <p class="lead" style="margin-bottom:0;">Capture el folio del documento para ubicar la información registral asociada en el sistema institucional.</p>
+        </div>
+      </section>
+
+      <div class="container">
+
+        <ol class="breadcrumb">
+          <li><a href="index.php">Inicio</a></li>
+          <li class="active">Referencia documental por folio</li>
+        </ol>
+
+        <div class="search-card">
+          <div class="row">
+            <div class="col-md-7 border-right-modern">
+              <form method="post" action="" autocomplete="off" novalidate>
+                <input type="hidden" name="csrf_token" value="ae5ca0f682e4c3a5dfd09a7c4224c03723d0503987f9ad9eb0d3c9c7b202318e">
+
+                <div class="form-group" style="margin-bottom: 25px;">
+                  <label for="folio" style="font-size: 16px; margin-bottom: 10px;">Folio del documento</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-modern"
+                    id="folio"
+                    name="folio"
+                    maxlength="100"
+                    value="CBG3760391766"
+                    placeholder="Ejemplo: CBG12345678"
+                    required
+                  >
+                  <p class="help-block" style="margin-top: 8px; color: #777;">Capture el folio exactamente como aparece en el documento.</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                  <button type="submit" class="btn btn-ultra-modern">Consultar Folio</button>
+                  <a href="" class="btn btn-outline-modern">Limpiar</a>
+                </div>
+              </form>
+            </div>
+
+            <div class="col-md-5" style="padding-left: 30px;">
+              <h4 style="margin-top:0; color: var(--gob-wine); font-weight: 700;">Atención institucional</h4>
+              <p style="color: #666; font-size: 15px; line-height: 1.6;">
+                Si requiere precisión administrativa, observación o corrección de información, favor de comunicarse al correo de atención oficial:
+              </p>
+              <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #eaeaea; word-break: break-all;">
+                <a href="mailto:acuerdo445@sidgbe.gob.mx" style="color: var(--gob-wine); font-weight: 600; font-size: 15px;">
+                  acuerdo445@sidgbe.gob.mx
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        
+                  <div class="panel panel-modern" style="margin-bottom: 60px;">
+            <div class="panel-heading">
+              <h3 class="panel-title">Ficha de correspondencia registral</h3>
+            </div>
+            <div class="panel-body" style="padding: 0;">
+              
+              <div style="padding: 25px 25px 0 25px;">
+                <div class="alert alert-modern alert-success-modern" style="margin-bottom: 15px;">
+                  <strong><i class="glyphicon glyphicon-ok" style="margin-right: 5px;"></i> Resultado:</strong> Se localizaron datos registrales asociados al folio capturado.                </div>
+                <div class="alert alert-modern alert-info-modern" style="margin-bottom: 25px;">
+                  La información mostrada corresponde a los datos registrales localizados con base en el folio capturado
+                  y se presenta para fines de correspondencia documental.
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-modern table-hover">
+                  <tbody>
+                    <tr class="active">
+                      <th colspan="2"><i class="glyphicon glyphicon-user" style="margin-right: 8px;"></i> Datos de la persona titular</th>
+                    </tr>
+                    <tr>
+                      <th width="35%">Nombre completo</th>
+                      <td><strong>KATHIA MONSERRAT GAYTAN VILLA </strong></td>
+                    </tr>
+                    <tr>
+                      <th>CURP</th>
+                      <td>KAGV900804MMNYL03 </td>
+                    </tr>
+                    <tr>
+                      <th>Número de matrícula</th>
+                      <td>1501R900319</td>
+                    </tr>
+
+                    <tr class="active">
+                      <th colspan="2"><i class="glyphicon glyphicon-education" style="margin-right: 8px;"></i> Datos del servicio educativo</th>
+                    </tr>
+                    <tr>
+                      <th>Institución educativa emisora</th>
+                      <td>DIRECCIÓN GENERAL DE BACHILLERATO</td>
+                    </tr>
+                    <tr>
+                      <th>Servicio educativo</th>
+                      <td>Dirección General del Bachillerato (Acuerdo 445)</td>
+                    </tr>
+                    <tr>
+                      <th>Plantel o servicio educativo</th>
+                      <td>DIRECCIÓN GENERAL DE BACHILLERATO</td>
+                    </tr>
+                    <tr>
+                      <th>Clave de Centro de Trabajo</th>
+                      <td><span style="font-family: monospace; font-size: 15px; background: #f4f4f4; padding: 4px 8px; border-radius: 4px;">09DEX0001S</span></td>
+                    </tr>
+
+                    <tr class="active">
+                      <th colspan="2"><i class="glyphicon glyphicon-list-alt" style="margin-right: 8px;"></i> Trayectoria académica</th>
+                    </tr>
+                    <tr>
+                      <th>Estudios acreditados</th>
+                      <td>BACHILLERATO GENERAL CON FORMACIÓN LABORAL BÁSICA Y EXTENDIDA</td>
+                    </tr>
+                    <tr>
+                      <th>Resultado de evaluación</th>
+                      <td><span style="font-size: 18px; font-weight: 700; color: var(--gob-wine);">9.0</span></td>
+                    </tr>
+                    <tr>
+                      <th>Créditos obtenidos</th>
+                      <td>176</td>
+                    </tr>
+
+                    <tr class="active">
+                      <th colspan="2"><i class="glyphicon glyphicon-file" style="margin-right: 8px;"></i> Datos del documento</th>
+                    </tr>
+                    <tr>
+                      <th>Estatus actual</th>
+                      <td>
+                        <span class="badge-valido">
+                          <i class="glyphicon glyphicon-ok-sign" style="margin-right: 6px;"></i> VÁLIDO
+                        </span>
+                        <span style="color: #777; font-size: 13px; margin-left: 10px; font-weight: normal;">(REGISTRADO)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Folio consultado</th>
+                      <td><strong style="font-size: 16px; color: var(--gob-wine);">CBG3760391766</strong></td>
+                    </tr>
+                    <tr>
+                      <th>Fecha y hora de timbrado</th>
+                      <td><span style="color: #444;"><i class="glyphicon glyphicon-time" style="margin-right: 5px;"></i> 15/04/2025 10:33:06</span></td>
+                    </tr>
+
+                    <tr class="active">
+                      <th colspan="2"><i class="glyphicon glyphicon-qrcode" style="margin-right: 8px;"></i> Nodo de Autoridad Firmante</th>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="padding: 25px;">
+                        <div style="margin-bottom: 25px;">
+                          <strong style="display: block; margin-bottom: 8px; color: var(--gob-wine); font-size: 15px;">Cadena Original del complemento de certificación :</strong>
+                          <div class="code-box">fHwzLjB8MTZ8MDlERVgwMDAxU3xESVJFQ0NJw5NOIEdFTkVSQUwgREUgQkFDSElMTEVSQVRPfERJUkVDQ0nDk<br>04gR0VORVJBTCBERSBCQUNISUxMRVJBVE98S0FHVjkwMDgwNE1NTllMMDMgfEtBVEhJQSBNT05TRVJSQVQgR0<br>FZVEFOIFZJTExBIHwxNTAxUjkwMDMxOXwxNS8wNC8yMDI1IDEwOjMzOjA2fDE3Nnw5LjB8QkFDSElMTEVSQVR<br>PIEdFTkVSQUwgQ09OIEZPUk1BQ0nDk04gTEFCT1JBTCBCw4FTSUNBIFkgRVhURU5ESURBfHw=</div>
+                        </div>
+                        
+                        <div>
+                          <strong style="display: block; margin-bottom: 8px; color: var(--gob-wine); font-size: 15px;">Sello Digital de la Autoridad (Firma Electrónica Avanzada):</strong>
+                          <div class="code-box">3RFC0CEAtWhMADtfI6knFTimW5Ttu4Kcn/PIo7widLhHxN/PeuyM+uixqofaC/aryl3300VbRLj6pSrXscp13<br>qw1V3uWZnF5VucZoDoPbqbzZNwE2sL5+ohq6n+tmu6wChUo+37gi1PPWDOGJKyV1t6BlNWNNwsfAyelrwv2tV<br>NeMACNeYPI1EgzEG5k07Set3K46sxVMY1My6yXd/le7nQ03hm5WuZBzp1yJMiDw+HT7ozwM0AClr6c7+NwRLe<br>h2REpDRnrsfX6tWxlvxSUkUIL6bSfyV3oA88Lr4JLEzFv/1+RcWzGrUsW0kkuhKedlJCXSszZ+z8rW8Q0Gx3w<br>bVqsy8tVTCj0fWC8p3BmhZG1Naya+7FwLzj0YQHY5iOLfOLO35yc/KdlB7/yloONOOV8CooBlxUR3NT16ajCB<br>Go=</div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="padding: 25px; background-color: #fafafa; border-top: 1px solid #eaeaea;">
+                <p style="margin-bottom:0; color: #666; font-size: 14px; text-align: center;">
+                  Documento validado por el sistema automatizado. En caso de advertir diferencias o ausencia de información,
+                  favor de escribir a <a href="mailto:acuerdo445@sidgbe.gob.mx" style="color: var(--gob-wine); font-weight: 600;">acuerdo445@sidgbe.gob.mx</a>.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        
+      </div>
+    </main>
+
+    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+  </body>
+</html>
